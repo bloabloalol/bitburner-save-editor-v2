@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import { FileContext } from "App";
 import { Input } from "components/inputs/input";
 
-const BITNODE_COUNT = 14;
+const BITNODE_COUNT = 15;
 const UNLIMITED_BITNODE = 12;
 
 function getCompletions(sourceFiles: unknown, bitNodeN: number): number {
