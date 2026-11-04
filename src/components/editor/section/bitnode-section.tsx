@@ -5,7 +5,7 @@ import { FileContext } from "App";
 import { Input } from "components/inputs/input";
 
 const BITNODE_COUNT = 14;
-const UNLIMITED_BITNODE = 8;
+const UNLIMITED_BITNODE = 12;
 
 function getCompletions(sourceFiles: unknown, bitNodeN: number): number {
   if (Array.isArray(sourceFiles)) {
@@ -56,7 +56,7 @@ export default observer(function BitNodeSection() {
         <div className="border-t border-gray-700 pt-4 flex flex-col gap-2">
           <div className="flex items-baseline justify-between gap-4">
             <h3 className="text-lg font-bold text-gray-100">BitNode completions</h3>
-            <span className="text-xs text-gray-500">Most BitNodes: max 3. BitNode 8: unlimited.</span>
+            <span className="text-xs text-gray-500">Most BitNodes: max 3. BitNode 12: unlimited.</span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {Array.from({ length: BITNODE_COUNT }, (_, index) => index + 1).map((node) => {
