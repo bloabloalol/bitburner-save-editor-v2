@@ -37,6 +37,7 @@ export class FileStore {
         sourceFiles: data.sourceFiles,
       },
       updateBitNode: this.updateBitNode,
+      updateBitNodeCompletions: this.updateBitNodeCompletions,
     };
   }
 
@@ -44,10 +45,8 @@ export class FileStore {
     Object.assign(this.save.data.PlayerSave.data, updates);
   };
 
-  updateBitNode = (bitNodeN: number, completions: number) => {
+  updateBitNodeCompletions = (bitNodeN: number, completions: number) => {
     const player = this.save.data.PlayerSave.data as any;
-    player.bitNodeN = bitNodeN;
-
     // Bitburner uses an array in older saves and a JSONMap in newer saves.
     const sourceFiles = player.sourceFiles;
     if (Array.isArray(sourceFiles)) {
@@ -61,6 +60,11 @@ export class FileStore {
     } else {
       player.sourceFiles = [{ n: bitNodeN, lvl: completions }];
     }
+  };
+
+  updateBitNode = (bitNodeN: number, completions: number) => {
+    this.save.data.PlayerSave.data.bitNodeN = bitNodeN;
+    this.updateBitNodeCompletions(bitNodeN, completions);
   };
 
   get corporation() {
