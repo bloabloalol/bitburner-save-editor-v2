@@ -4,11 +4,12 @@ import { observer } from "mobx-react-lite";
 
 import { Bitburner } from "bitburner.types";
 import { FileContext } from "App";
-import EditorSection, { CORP_TAB_KEY } from "components/editor/section";
+import EditorSection, { BITNODE_TAB_KEY, CORP_TAB_KEY } from "components/editor/section";
 
 import IconFilter from "icons/filter.svg?react";
 
 const TAB_LABELS: Record<string, string> = {
+  [BITNODE_TAB_KEY]:                         "BitNode",
   [CORP_TAB_KEY]:                            "Corporation",
   [Bitburner.SaveDataKey.PlayerSave]:        "Player",
   [Bitburner.SaveDataKey.FactionsSave]:      "Factions",
@@ -33,19 +34,19 @@ export default observer(function EditorContainer() {
     setIsFiltering((f) => !f);
   }, []);
 
-  const [activeTab, setActiveTab] = useState<Bitburner.SaveDataKey | typeof CORP_TAB_KEY>(Bitburner.SaveDataKey.PlayerSave);
+  const [activeTab, setActiveTab] = useState<Bitburner.SaveDataKey | typeof CORP_TAB_KEY | typeof BITNODE_TAB_KEY>(Bitburner.SaveDataKey.PlayerSave);
   const onClickTab = useCallback<MouseEventHandler<HTMLButtonElement>>((event) => {
-    setActiveTab(event.currentTarget.value as Bitburner.SaveDataKey | typeof CORP_TAB_KEY);
+    setActiveTab(event.currentTarget.value as Bitburner.SaveDataKey | typeof CORP_TAB_KEY | typeof BITNODE_TAB_KEY);
     setIsFiltering(false);
   }, []);
 
   return (
     <div className="h-full w-full mt-4 flex flex-col">
       <nav className="w-full flex flex-wrap gap-1 border-b border-green-900 pb-1 items-center">
-          {[...Object.values(Bitburner.SaveDataKey), ...(fileContext.corporation ? [CORP_TAB_KEY] : [])].map((key) => {
+          {[BITNODE_TAB_KEY, ...Object.values(Bitburner.SaveDataKey), ...(fileContext.corporation ? [CORP_TAB_KEY] : [])].map((key) => {
             const hasData = fileContext.ready
-              ? key === CORP_TAB_KEY
-                ? !!fileContext.corporation
+              ? key === CORP_TAB_KEY || key === BITNODE_TAB_KEY
+                ? key === BITNODE_TAB_KEY || !!fileContext.corporation
                 : (() => {
                   const val = (fileContext.save?.data as any)?.[key];
                   if (val === null || val === undefined) return false;

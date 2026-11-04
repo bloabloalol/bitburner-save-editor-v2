@@ -12,11 +12,13 @@ import StaneksGiftSection from "./staneks-gift-section";
 import GoSection from "./go-section";
 import GangSection from "./gang-section";
 import CorporationSection from "./corporation-section";
+import BitNodeSection from "./bitnode-section";
 
 export const CORP_TAB_KEY = "__CorporationTab__";
+export const BITNODE_TAB_KEY = "__BitNodeTab__";
 
 interface Props {
-  tab: Bitburner.SaveDataKey | typeof CORP_TAB_KEY;
+  tab: Bitburner.SaveDataKey | typeof CORP_TAB_KEY | typeof BITNODE_TAB_KEY;
   isFiltering?: boolean;
 }
 
@@ -24,6 +26,8 @@ export default class EditorSection extends Component<Props> {
   get component() {
     const { tab, ...restProps } = this.props;
     switch (tab) {
+      case BITNODE_TAB_KEY:
+        return <BitNodeSection />;
       case Bitburner.SaveDataKey.PlayerSave:
         return <PlayerSection {...restProps} />;
       case Bitburner.SaveDataKey.FactionsSave:
